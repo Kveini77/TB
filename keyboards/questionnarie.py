@@ -45,7 +45,7 @@ async def questionnaire_keyboard3():
     )
     dont_love_button = InlineKeyboardButton(
         "Dont love",
-        callback_data="dont_love"
+        callback_data="love"
     )
     markup.add(love_button)
     markup.add(dont_love_button)

@@ -13,3 +13,9 @@ BAN_WARN_TEXT = ("Пользователь: {user}\n"
 BAN_TEXT = ("Пользователь: {user}\n"
             "ТЫ ЗАБАААААНЕН\n"
             "кол-во нарушений: {ban_count}")
+
+PROFILE_TEXT = ('Никнейм {nickname}\n'
+                'Биография: {biography}\n'
+                'Возраст: {age}\n'
+                'Женат: {married}\n'
+                'Гендер: {gender}\n')

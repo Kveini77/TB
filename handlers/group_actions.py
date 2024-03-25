@@ -1,6 +1,6 @@
 from aiogram import types, Dispatcher
 from config import bot
-from profanity_check import predict, predict_prob
+from profanity_check import predict_prob
 from database.bot_db import Database
 from const import (
     FIRST_BAN_WARN_TEXT,

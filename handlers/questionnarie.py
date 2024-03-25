@@ -7,7 +7,7 @@ async def questionnaire_start_call(call: types.CallbackQuery):
     await call.message.delete()
     await bot.send_message(
         chat_id=call.from_user.id,
-        text="do you like light novels?",
+        text="Какие новеллы тебе нравятся?",
         reply_markup=await questionnaire_keyboard()
     )
 
@@ -16,7 +16,7 @@ async def yes_call(call: types.CallbackQuery):
     await call.message.delete()
     await bot.send_message(
         chat_id=call.from_user.id,
-        text="wow me too\n12 or 24",
+        text="вау мне тоже\n\n12 или 24",
         reply_markup=await questionnaire_keyboard2()
     )
 
@@ -25,7 +25,7 @@ async def no_call(call: types.CallbackQuery):
     await call.message.delete()
     await bot.send_message(
         chat_id=call.from_user.id,
-        text="pon\n12 or 24?",
+        text="ПОН\n\n12 или 24?",
         reply_markup=await questionnaire_keyboard2()
     )
 
@@ -34,7 +34,7 @@ async def num12_call(call: types.CallbackQuery):
     await call.message.delete()
     await bot.send_message(
         chat_id=call.from_user.id,
-        text="pon\ndo you like initial d?",
+        text="пон\n\nТебе нравится 'Initial D'?",
         reply_markup=await questionnaire_keyboard3()
     )
 
@@ -43,7 +43,7 @@ async def num24_call(call: types.CallbackQuery):
     await call.message.delete()
     await bot.send_message(
         chat_id=call.from_user.id,
-        text="pon\ndo you like initial d?",
+        text="пон\n\nТебе нравится 'Initial D'?",
         reply_markup=await questionnaire_keyboard3()
     )
 
@@ -52,16 +52,9 @@ async def love_call(call: types.CallbackQuery):
     await call.message.delete()
     await bot.send_message(
         chat_id=call.from_user.id,
-        text="thank you for completing the survey"
+        text="Спасибо за пройденный опросник"
     )
 
-
-async def dont_love_call(call: types.CallbackQuery):
-    await call.message.delete()
-    await bot.send_message(
-        chat_id=call.from_user.id,
-        text="thank you for completing the survey"
-    )
 
 
 def register_questionnaire_handlers(dp: Dispatcher):
@@ -88,9 +81,5 @@ def register_questionnaire_handlers(dp: Dispatcher):
     dp.register_callback_query_handler(
         love_call,
         lambda call: call.data == "love"
-    )
-    dp.register_callback_query_handler(
-        dont_love_call,
-        lambda call: call.data == "dont_love"
     )
 

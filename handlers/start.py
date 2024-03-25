@@ -27,7 +27,7 @@ async def start_menu(message: types.Message):
     #         reply_markup=await start_menu_keyboard()
     #     )
 
-    with open(MEDIA_DESTINATION + "bot_ani.gif", "rb") as ani:
+    with open(MEDIA_DESTINATION + "bot_gif.gif", "rb") as ani:
         await bot.send_animation(
             chat_id=message.from_user.id,
             animation=ani,
