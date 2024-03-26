@@ -28,13 +28,11 @@ async def my_profile_call(call: types.CallbackQuery):
     else:
         await bot.send_message(
             chat_id=call.from_user.id,
-            text="Заргайся"
+            text="Зарегайся"
         )
 
 
 async def random_profile_call(call: types.CallbackQuery):
-    if call.message.caption.startswith("Ник:"):
-        await call.message.delete()
     db = Database()
     profiles = db.select_all_profile(
         tg_id=call.from_user.id
@@ -75,8 +73,19 @@ async def detect_like_call(call: types.CallbackQuery):
     await random_profile_call(call=call)
 
 
-async def delete_profile_call(call: types.CallbackQuery):
+async def detect_dislike_call(call: types.CallbackQuery):
     await call.message.delete()
+    owner = re.sub("likedis_", "", call.data)
+    db = Database()
+
+    db.insert_dislike_profile(
+        owner=owner,
+        disliker=call.from_user.id
+    )
+    await random_profile_call(call=call)
+
+
+async def delete_profile_call(call: types.CallbackQuery):
     db = Database()
     db.delete_profile(
         tg_id=call.from_user.id
@@ -95,6 +104,10 @@ def register_profile_handlers(dp: Dispatcher):
     dp.register_callback_query_handler(
         detect_like_call,
         lambda call: 'like_' in call.data
+    )
+    dp.register_callback_query_handler(
+        detect_dislike_call,
+        lambda call: 'likedis_' in call.data
     )
     dp.register_callback_query_handler(
         my_profile_call,

@@ -15,6 +15,7 @@ class Database:
         self.connection.execute(sql_queries.CREATE_BAN_USER_TABLE_QUERY)
         self.connection.execute(sql_queries.CREATE_PROFILE_TABLE_QUERY)
         self.connection.execute(sql_queries.CREATE_LIKE_TABLE_QUERY)
+        self.connection.execute(sql_queries.CREATE_DISLIKE_TABLE_QUERY)
 
         self.connection.commit()
 
@@ -70,7 +71,7 @@ class Database:
         }
         return self.cursor.execute(
             sql_queries.SELECT_LEFT_JOIN_PROFILE_QUERY,
-            (tg_id, tg_id,)
+            (tg_id, tg_id, tg_id,)
         ).fetchall()
 
     def insert_like_profile(self, owner, liker):
@@ -107,5 +108,12 @@ class Database:
         self.cursor.execute(
             sql_queries.DELETE_PROFILE_QUERY,
             (tg_id,)
+        )
+        self.connection.commit()
+
+    def insert_dislike_profile(self, owner, disliker):
+        self.cursor.execute(
+            sql_queries.INSERT_DISLIKE_QUERY,
+            (None, owner, disliker)
         )
         self.connection.commit()
