@@ -5,7 +5,8 @@ from handlers import (
     questionnarie,
     group_actions,
     ban_checker,
-    registration
+    registration,
+    profile
 )
 from database import bot_db
 
@@ -20,6 +21,7 @@ questionnarie.register_questionnaire_handlers(dp=dp)
 group_actions.register_group_actions_handlers(dp=dp)
 ban_checker.register_ban_checker_handlers(dp=dp)
 registration.register_registration_handlers(dp=dp)
+profile.register_profile_handlers(dp=dp)
 
 
 if __name__ == '__main__':

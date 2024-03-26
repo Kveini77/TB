@@ -19,7 +19,17 @@ async def start_menu_keyboard():
         "регистрация",
         callback_data="registration"
     )
+    random_profile_button = InlineKeyboardButton(
+        "Профили",
+        callback_data="random_profile"
+    )
+    my_profile_button = InlineKeyboardButton(
+        "Мой профиль",
+        callback_data="my_profile"
+    )
     markup.add(questionnarie_button)
     markup.add(ban_check_button)
     markup.add(registration_button)
+    markup.add(random_profile_button)
+    markup.add(my_profile_button)
     return markup
