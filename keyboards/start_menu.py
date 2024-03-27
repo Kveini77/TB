@@ -27,9 +27,14 @@ async def start_menu_keyboard():
         "Мой профиль",
         callback_data="my_profile"
     )
+    reference_menu_button = InlineKeyboardButton(
+        "Реферальная ссылка",
+        callback_data="reference_menu"
+    )
     markup.add(questionnarie_button)
     markup.add(ban_check_button)
     markup.add(registration_button)
     markup.add(random_profile_button)
     markup.add(my_profile_button)
+    markup.add(reference_menu_button)
     return markup

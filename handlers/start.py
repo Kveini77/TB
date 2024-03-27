@@ -1,4 +1,8 @@
+import sqlite3
+
 from aiogram import types, Dispatcher
+from aiogram.utils.deep_linking import _create_link
+
 from config import bot, MEDIA_DESTINATION
 from const import START_MENU_TEXT
 from database import bot_db
@@ -26,6 +30,29 @@ async def start_menu(message: types.Message):
     #         ),
     #         reply_markup=await start_menu_keyboard()
     #     )
+    command = message.get_full_command()
+    if command[1] != '':
+        link = await _create_link("start", payload=command[1])
+        owner = db.select_user_by_link(link=link)
+        if owner['telegram_id'] == message.from_user.id:
+            await bot.send_message(
+                chat_id=message.from_user.id,
+                text='Ты не пройдешь'
+            )
+            return
+        try:
+            db.insert_reference_user(
+                owner=owner['telegram_id'],
+                reference=message.from_user.id
+            )
+            db.update_owner_balance(
+                tg_id=owner['telegram_id']
+            )
+        except sqlite3.IntegrityError:
+            await bot.send_message(
+                chat_id=message.from_user.id,
+                text='Ты уже использовал эту ссылку соррян'
+            )
 
     with open(MEDIA_DESTINATION + "bot_gif.gif", "rb") as ani:
         await bot.send_animation(
