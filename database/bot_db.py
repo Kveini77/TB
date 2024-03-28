@@ -17,6 +17,9 @@ class Database:
         self.connection.execute(sql_queries.CREATE_LIKE_TABLE_QUERY)
         self.connection.execute(sql_queries.CREATE_DISLIKE_TABLE_QUERY)
         self.connection.execute(sql_queries.CREATE_REFERENCE_TABLE_QUERY)
+        self.connection.execute(sql_queries.CREATE_SCRAP_NEWS_QUERY)
+        self.connection.execute(sql_queries.CREATE_SCRAP_NEWS_24KG_QUERY)
+
 
         try:
             self.connection.execute(sql_queries.ALTER_TABLE_USER_QUERY)
@@ -191,5 +194,31 @@ class Database:
         }
         return self.cursor.execute(
             sql_queries.SELECT_REFERENCE_USERS_QUERY,
+            ()
+        ).fetchall()
+
+    def insert_scrap_news(self, link):
+        self.cursor.execute(
+            sql_queries.INSERT_SCRAP_NEWS_QUERY,
+            (None, link,)
+        )
+        self.connection.commit()
+
+    def insert_scrap_news_24kg(self, title, time, link):
+        self.cursor.execute(
+            sql_queries.INSERT_SCRAP_NEWS_24KG_QUERY,
+            (None, title, time, link,)
+        )
+        self.connection.commit()
+
+    def select_scrap_news_24kg(self):
+        self.cursor.row_factory = lambda cursor, row: {
+            "id": row[0],
+            "title": row[1],
+            "time": row[2],
+            "link": row[3]
+        }
+        return self.cursor.execute(
+            sql_queries.SELECT_SCRAP_NEWS_24KG_QUERY,
             ()
         ).fetchall()

@@ -7,7 +7,8 @@ from handlers import (
     ban_checker,
     registration,
     profile,
-    reference
+    reference,
+    scraper
 )
 from database import bot_db
 
@@ -24,6 +25,7 @@ ban_checker.register_ban_checker_handlers(dp=dp)
 registration.register_registration_handlers(dp=dp)
 profile.register_profile_handlers(dp=dp)
 reference.register_reference_menu_handlers(dp=dp)
+scraper.register_scraper_handlers(dp=dp)
 
 if __name__ == '__main__':
     executor.start_polling(
