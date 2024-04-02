@@ -1,5 +1,3 @@
-import sqlite3
-
 from aiogram import types, Dispatcher
 from config import bot, MEDIA_DESTINATION
 from database import bot_db

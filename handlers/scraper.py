@@ -2,9 +2,12 @@ from aiogram import types, Dispatcher
 from config import bot
 from keyboards.scraper import scraper_menu_keyboard
 from scraper.news_scraper import NewsScraper
-from scraper.news_24kg_scraper import NewsKGScraper
+from scraper.async_news_24kg_scraper import AsyncNewsKGScraper
 from database.bot_db import Database
+from database.async_database import AsyncDatabase
+from database import sql_queries
 import const
+
 
 async def scraper_menu_call(call: types.CallbackQuery):
     await call.message.delete()
@@ -29,11 +32,16 @@ async def scrap_news_call(call: types.CallbackQuery):
 
 
 async def scrap_news_24kg_call(call: types.CallbackQuery):
-    sc = NewsKGScraper()
-    sc.scrape_data()
-    db = Database()
-    news_24kg = db.select_scrap_news_24kg()
-    news_list = [f"{news['title']} ({news['time']}) - {news['link']}" for news in news_24kg]
+    sc = AsyncNewsKGScraper()
+    await sc.get_pages()
+    db = AsyncDatabase()
+    db = AsyncDatabase()
+
+    news_24kg = await db.execute_query(
+        query=sql_queries.SELECT_SCRAP_NEWS_24KG_QUERY,
+        fetch='all'
+    )
+    news_list = [f"{news['NEWS_TITLE']} ({news['NEWS_TIME']}) - {news['NEWS_LINK']}" for news in news_24kg]
     await bot.send_message(
         chat_id=call.from_user.id,
         text="\n".join(news_list[:5])
